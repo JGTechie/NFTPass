@@ -9,6 +9,11 @@ const tubeStations = [
   'King\'s Cross St Pancras',
   'Liverpool Street',
   'Waterloo',
+  'Baker Street',
+  'Oxford Circus',
+  'Bond Street',
+  'Holborn',
+  'Euston Square',
 ];
 
 // Route to get all station names
