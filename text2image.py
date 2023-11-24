@@ -21,7 +21,7 @@ response = requests.post(api_url, json=payload)
 # Check if the request was successful (status code 200)
 if response.status_code == 200:
     # Assuming the API response provides the image URL
-    image_url = response.json().get('image_url')
+    image_url = response.json()
     print(f"Image generated successfully. Image URL: {image_url}")
 else:
     print(f"Error generating image. Status code: {response.status_code}")
