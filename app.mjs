@@ -9,7 +9,8 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const app = express();
-const PORT = 3000;
+app.use(express.json());
+const PORT = 8080;
 
 // Sample London Tube station names
 const tubeStations = [
@@ -41,14 +42,18 @@ app.get("/stations/:stationName", (req, res) => {
 });
 
 app.get("/generate", async (req, res) => {
+  const destination = req.body.destination;
+
+  console.log(`Generating image for ${destination} station...`);
   const response = await openai.images.generate({
     model: "dall-e-3",
-    prompt: "Oxford Circus station, London",
+    prompt: `${destination} station, London`,
     n: 1,
     size: "1024x1024",
   });
 
-  console.log(response);
+  console.log("Generated image!");
+  console.log(`${response.data[0].url}`);
   res.json({ url: response.data[0].url });
 });
 
