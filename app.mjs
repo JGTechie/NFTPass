@@ -43,6 +43,10 @@ app.get("/stations/:stationName", (req, res) => {
 
 app.get("/generate", async (req, res) => {
   const destination = req.body.destination;
+  if (!destination) {
+    res.status(400).json({ error: "Destination not provided" });
+    return;
+  }
 
   console.log(`Generating image for ${destination} station...`);
   const response = await openai.images.generate({
@@ -55,7 +59,11 @@ app.get("/generate", async (req, res) => {
   console.log("Generated image!");
   console.log(`${response.data[0].url}`);
   const journeyCost = (Math.random() * (10 - 1) + 1).toFixed(2);
-  res.json({ url: response.data[0].url, destination: destination, journeyCost });
+  res.json({
+    url: response.data[0].url,
+    destination: destination,
+    journeyCost,
+  });
 });
 
 // Start the server
