@@ -54,8 +54,8 @@ app.get("/generate", async (req, res) => {
 
   console.log("Generated image!");
   console.log(`${response.data[0].url}`);
-  const journeyCost = Math.floor(Math.random() * 10) + 1;
-  res.json({ url: response.data[0].url, destination: destination, cost });
+  const journeyCost = (Math.random() * (10 - 1) + 1).toFixed(2);
+  res.json({ url: response.data[0].url, destination: destination, journeyCost });
 });
 
 // Start the server
