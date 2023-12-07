@@ -41,6 +41,10 @@ app.get("/stations/:stationName", (req, res) => {
   res.json(stationInfo);
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+})
+
 app.get("/generate", async (req, res) => {
   const destination = req.body.destination;
   if (!destination) {
