@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-app.get("/generate", async (req, res) => {
+app.post("/generate", async (req, res) => {
   const destination = req.body.destination;
   if (!destination) {
     res.status(400).json({ error: "Destination not provided" });
