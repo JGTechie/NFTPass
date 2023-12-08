@@ -3,16 +3,17 @@ import { NFTStorage, File } from "nft.storage";
 import axios from "axios";
 import { OpenAI } from "openai";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const app = express();
+app.use(cors());
 app.use(express.json());
 const PORT = 8080;
 
-// Sample London Tube station names
 const tubeStations = [
   "Paddington",
   "Victoria",
@@ -43,7 +44,7 @@ app.get("/stations/:stationName", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
-})
+});
 
 app.get("/generate", async (req, res) => {
   const destination = req.body.destination;
@@ -62,11 +63,21 @@ app.get("/generate", async (req, res) => {
 
   console.log("Generated image!");
   console.log(`${response.data[0].url}`);
-  const journeyCost = (Math.random() * (10 - 1) + 1).toFixed(2);
   res.json({
     url: response.data[0].url,
+  });
+});
+app.get("/getPrice", async (req, res) => {
+  const destination = req.body.destination;
+  if (!destination) {
+    res.status(400).json({ error: "Destination not provided" });
+    return;
+  }
+
+  const price = (Math.random() * (10 - 1) + 1).toFixed(2);
+  res.json({
     destination: destination,
-    journeyCost,
+    price: price,
   });
 });
 
